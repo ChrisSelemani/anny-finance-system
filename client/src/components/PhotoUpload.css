@@ -1,0 +1,34 @@
+.photo-upload-container {
+  margin-bottom: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  background: #f9f9f9;
+}
+
+.dropzone:hover {
+  border-color: #667eea;
+}
+
+.photo-preview img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.photo-required-badge {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-block;
+}

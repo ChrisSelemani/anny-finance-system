@@ -52,12 +52,16 @@ function App() {
 
   const handleLogin = (status) => {
     setIsAdmin(status);
+
+    // ✅ FIX: remove full page reload
+    // window.location.href = '/'; ❌ REMOVE THIS
+
+    // optional safe sync (no redirect)
     if (status) {
-      window.location.href = '/';
+      localStorage.setItem('isAdmin', 'true');
     }
   };
 
-  // SIMPLE ROUTING FIX
   const path = window.location.pathname;
 
   if (path === '/admin') {

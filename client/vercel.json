@@ -1,8 +1,21 @@
+// {
+//   "rewrites": [
+//     {
+//       "source": "/(.*)",
+//       "destination": "/index.html"
+//     }
+//   ]
+// }
+
+// {
+//   "rewrites": [
+//     { "source": "/(.*)", "destination": "/" }
+//   ]
+// }
+
+
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

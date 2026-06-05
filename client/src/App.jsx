@@ -76,7 +76,6 @@
 // export default App;
 
 
-
 import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -86,12 +85,29 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
     checkAdminStatus();
+    
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
 
   const checkAdminStatus = async () => {
+    // First check localStorage
+    const localAdmin = localStorage.getItem('isAdmin');
+    
+    if (localAdmin === 'true') {
+      setIsAdmin(true);
+      setIsChecking(false);
+      return;
+    }
+    
     try {
       const response = await fetch(`${API_URL}/auth/me`, {
         credentials: 'include'
@@ -123,15 +139,22 @@ function App() {
     setIsAdmin(status);
     if (status) {
       localStorage.setItem('isAdmin', 'true');
+      window.location.href = '/';
     }
   };
 
   const handleLogout = () => {
+    // Clear all admin state
     setIsAdmin(false);
+    
+    // Clear all storage
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('adminUsername');
+    sessionStorage.clear();
+    
+    // Redirect to home page
+    window.location.href = '/';
   };
-
-  const isAdminRoute = window.location.pathname === '/admin';
 
   if (isChecking) {
     return <div style={{ 
@@ -145,7 +168,7 @@ function App() {
     }}>Loading...</div>;
   }
 
-  if (isAdminRoute) {
+  if (currentPath === '/admin') {
     return <Login onLogin={handleLogin} />;
   }
 
